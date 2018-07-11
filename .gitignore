@@ -1,17 +1,40 @@
-/.web-server-pid
-/app/config/parameters.yml
-/build/
+.idea/
 /phpunit.xml
+/build/reports
+
+# Email spool folder
+/app/spool/*
+
+# Cache, session files and logs (Symfony3)
 /var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
-/vendor/
+!/var/SymfonyRequirements.php
+
+# Parameters
+/app/config/parameters.yml
+/app/config/parameters_test.yml
+
+# Managed by Composer && npm
+/bin/*
+!bin/console
+!bin/symfony_requirements
+/vendor
+/node_modules
+package-lock.json
+
+#Vagrant
+/test/.vagrant/
+/test/roles/
+playbook.retry
+
+
+# Assets and user uploads
 /web/bundles/
+/web/photos/
+/web/assets/
+
+#Behat
+/behat.yml
+
+#frontend
+/src/AppBundle/Resources/public/frontend/
+/web/client/
