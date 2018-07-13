@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,15 +22,38 @@ class Post {
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="AUTO")
    * @ORM\Column(type="integer")
-   */private $id;
+   */
+  private $id;
 
   /**
    * @ORM\Column(type="string")
-   */private $title;
+   */
+  private $title;
 
   /**
    * @ORM\Column(type="string")
-   */private $body;
+   */
+  private $body;
+
+  /**
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $user;
+
+  /**
+   * Many Category have many Posts.
+   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
+   * @ORM\JoinTable(name="posts_category",
+   *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+   *      inverseJoinColumns={@ORM\JoinColumn(name="categorys_id", referencedColumnName="id")}
+   * )
+   */
+  private $category;
+
+  public function __construct() {
+    $this->category = new ArrayCollection();
+  }
 
   /**
    * @return mixed
@@ -72,5 +96,34 @@ class Post {
   public function setBody($body) {
     $this->body = $body;
   }
+
+  /**
+   * @return mixed
+   */
+  public function getUser() {
+    return $this->user;
+  }
+
+  /**
+   * @param mixed $user
+   */
+  public function setUser(User $user) {
+    $this->user = $user;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getCategory() {
+    return $this->category;
+  }
+
+  /**
+   * @param \AppBundle\Entity\Category $category
+   */
+  public function setCategory(Category $category) {
+    $this->category[] = $category;
+  }
+
 
 }

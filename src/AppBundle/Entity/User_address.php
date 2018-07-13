@@ -45,6 +45,12 @@ class User_address {
   private $house;
 
   /**
+   * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+   * @ORM\JoinColumn(name="user_id",nullable=false)
+   */
+  private $user;
+
+  /**
    * @return mixed
    */
   public function getId() {
@@ -112,6 +118,20 @@ class User_address {
    */
   public function setHouse($house) {
     $this->house = $house;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getUser() {
+    return $this->user;
+  }
+
+  /**
+   * @param mixed $user
+   */
+  public function setUser(User $user) {
+    $this->user = $user;
   }
 
 

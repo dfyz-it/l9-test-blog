@@ -30,7 +30,7 @@ class User {
   private $name;
 
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string", unique=true)
    */
   private $email;
 
@@ -38,6 +38,7 @@ class User {
    * @ORM\Column(type="date")
    */
   private $date_of_birth;
+
 
   /**
    * @return mixed
@@ -94,5 +95,6 @@ class User {
   public function setDateOfBirth(\DateTime $date_of_birth = NULL) {
     $this->date_of_birth = $date_of_birth;
   }
+
 
 }
