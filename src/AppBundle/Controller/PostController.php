@@ -12,5 +12,9 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PostController extends Controller {
+//getFilters()->enable('soft-deleteable');
 
+//$filter = $em->getFilters()->enable('soft-deleteable');
+//$filter->disableForEntity('Entity\Article');
+//$filter->enableForEntity('Entity\Article');
 }
