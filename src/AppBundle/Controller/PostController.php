@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller;
 
-
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,42 +19,18 @@ class PostController extends Controller {
    * @Route("/{category_code}/posts", name="category_show_posts")
    * @Method("GET")
    */
-  public function getPostAction($category_code) {
+  public function getPostAction($category_code, Request $request) {
 
     $em = $this->getDoctrine()->getManager();
 
     $posts = $em->getRepository('AppBundle:Post')
-    ->findAllPostByCategory($category_code);
+      ->findAllPostByCategory($category_code);
+
+    $posts = $this->get('knp_paginator')
+      ->paginate($posts, $request->query->get('page', 1), 5);
 
     return $this->render('blog/posts.html.twig', [
       'posts' => $posts,
     ]);
   }
-
-
-
-  //  /**
-  //   * @Route("/genus/{name}/notes", name="genus_show_notes")
-  //   * @Method("GET")
-  //   */
-  //
-  //  public function getNotesAction(Genus $genus) {
-  //    foreach ($genus->getNotes() as $note) {
-  //      $notes[] = [
-  //        'id' => $note->getId(),
-  //        'username' => $note->getUsername(),
-  //        'avatarUri' => '/images/' . $note->getUserAvatarFilename(),
-  //        'note' => $note->getNote(),
-  //        'date' => $note->getCreatedAt()->format('M d, Y'),
-  //      ];
-  //    }
-  //
-  //    $data = [
-  //      'notes' => $notes,
-  //    ];
-  //
-  //    return new JsonResponse($data);
-  //  }
-
-
 }

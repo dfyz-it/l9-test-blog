@@ -49,8 +49,8 @@ class LoadFixtures extends Fixture {
       for ($f = 0; $f < 4; $f++) {
 
         $post = new Post();
-        $post->setTitle('title' . $i);
-        $post->setBody('body' . $i);
+        $post->setTitle('title ' . rand(0,50));
+        $post->setBody('body ' . rand(0,50));
         $post->setUser($user);
         $post->setCategory($category);
         $manager->persist($post);
@@ -62,7 +62,6 @@ class LoadFixtures extends Fixture {
   }
 
 
-  //
   public function category() {
     $categorys = [
       0 => 'Finance',
