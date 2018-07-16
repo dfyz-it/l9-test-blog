@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity (repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\Table(name="post")
  */
 class Post {
@@ -44,9 +44,9 @@ class Post {
   /**
    * Many Category have many Posts.
    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
-   * @ORM\JoinTable(name="posts_category",
+   * @ORM\JoinTable(name="posts_categories",
    *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
-   *      inverseJoinColumns={@ORM\JoinColumn(name="categorys_id", referencedColumnName="id")}
+   *      inverseJoinColumns={@ORM\JoinColumn(name="categories_id", referencedColumnName="id")}
    * )
    */
   private $category;

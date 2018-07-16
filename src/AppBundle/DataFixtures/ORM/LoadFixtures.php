@@ -20,25 +20,8 @@ class LoadFixtures extends Fixture {
     //      $manager->persist($object);
     //    }
     //    $manager->flush();
-    $categorys = [
-      'Finance',
-      'Exotic option',
-      'Options broker',
-      'Protective put',
-      'Ratio spread',
-      'Intermarket Spread',
-      'Black model',
-      'Jump diffusion',
-      'Lookback option',
-      'Volatility arbitrage',
-      'Option style',
-      'Covered warrant',
-      'Straddle',
-      'Commodore option',
-    ];
 
-
-    foreach ($categorys as $key => $value) {
+    foreach ($this->category() as $key => $value) {
       $category = new Category();
       $category->setName($value);
       $category->setCode($key);
@@ -50,7 +33,7 @@ class LoadFixtures extends Fixture {
       $user->setName('user' . $i);
       $user->setDateOfBirth(new \DateTime('2011-01-01T15:03:01.012345Z'));
       $user->setEmail('user' . $i . '@gmail.com');
-      $manager->persist($user);
+
 
       $user_address = new User_address();
       $user_address->setCity('city' . $i);
@@ -58,49 +41,47 @@ class LoadFixtures extends Fixture {
       $user_address->setHouse($i);
       $user_address->setStreet('street' . $i);
       $user_address->setUser($user);
+
+
+      $manager->persist($user);
       $manager->persist($user_address);
 
       for ($f = 0; $f < 4; $f++) {
-
-
 
         $post = new Post();
         $post->setTitle('title' . $i);
         $post->setBody('body' . $i);
         $post->setUser($user);
-//        $post->setCategory($category);
+        $post->setCategory($category);
         $manager->persist($post);
       }
     }
 
-      $manager->flush();
+    $manager->flush();
 
   }
 
 
+  //
+  public function category() {
+    $categorys = [
+      0 => 'Finance',
+      1 => 'Exotic option',
+      2 => 'Options broker',
+      3 => 'Protective put',
+      4 => 'Ratio spread',
+      5 => 'Intermarket Spread',
+      6 => 'Black model',
+      7 => 'Jump diffusion',
+      8 => 'Lookback option',
+      9 => 'Volatility arbitrage',
+      10 => 'Option style',
+      11 => 'Covered warrant',
+      12 => 'Straddle',
+      13 => 'Commodore option',
+    ];
 
-  //
-  //  public function category() {
-  //    $categorys = [
-  //      'Finance',
-  //      'Exotic option',
-  //      'Options broker',
-  //      'Protective put',
-  //      'Ratio spread',
-  //      'Intermarket Spread',
-  //      'Black model',
-  //      'Jump diffusion',
-  //      'Lookback option',
-  //      'Volatility arbitrage',
-  //      'Option style',
-  //      'Covered warrant',
-  //      'Straddle',
-  //      'Commodore option',
-  //    ];
-  //
-  //    $key = array_rand($genera);
-  //
-  //    return $genera[$key];
-  //  }
+    return $categorys;
+  }
 
 }

@@ -19,14 +19,13 @@ class PostController extends Controller {
    * @Route("/{category_code}/posts", name="category_show_posts")
    * @Method("GET")
    */
-  public function getPostAction() {
+  public function getPostAction($category_code) {
 
     $em = $this->getDoctrine()->getManager();
 
     $posts = $em->getRepository('AppBundle:Post')
-      ->findAll();
+    ->findAllPostByCategory($category_code);
 
-//    dump($posts);die();
     return $this->render('blog/posts.html.twig', [
       'posts' => $posts,
     ]);
@@ -56,4 +55,6 @@ class PostController extends Controller {
   //
   //    return new JsonResponse($data);
   //  }
+
+
 }
