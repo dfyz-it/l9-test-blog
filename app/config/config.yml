@@ -57,9 +57,45 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-
+#        naming_strategy: doctrine.orm.naming_strategy.underscore
+#        auto_mapping: true
+        default_entity_manager: default
+        entity_managers:
+            default:
+              connection: default
+              naming_strategy: doctrine.orm.naming_strategy.underscore
+              auto_mapping: true
+              dql:
+                  numeric_functions:
+                      ACOS: DoctrineExtensions\Query\Mysql\Acos
+                      COS: DoctrineExtensions\Query\Mysql\Cos
+                      RADIANS: DoctrineExtensions\Query\Mysql\Radians
+                      SIN: DoctrineExtensions\Query\Mysql\Sin
+              mappings:
+                  gedmo_translatable:
+                      type: annotation
+                      prefix: Gedmo\Translatable\Entity
+                      dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                      alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
+                      is_bundle: false
+                  gedmo_translator:
+                      type: annotation
+                      prefix: Gedmo\Translator\Entity
+                      dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+                      alias: GedmoTranslator # (optional) it will default to the name set for the mapping
+                      is_bundle: false
+                  gedmo_loggable:
+                      type: annotation
+                      prefix: Gedmo\Loggable\Entity
+                      dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                      alias: GedmoLoggable # (optional) it will default to the name set for the mappingmapping
+                      is_bundle: false
+                  gedmo_tree:
+                      type: annotation
+                      prefix: Gedmo\Tree\Entity
+                      dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                      alias: GedmoTree # (optional) it will default to the name set for the mapping
+                      is_bundle: false
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -81,3 +117,31 @@ knp_paginator:
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'
 
+# Stof Configuration
+stof_doctrine_extensions:
+    default_locale: "%locale%"
+    translation_fallback: true
+    persist_default_translation: true
+
+    # Only used if you activated the Uploadable extension
+    uploadable:
+        #stof_doctrine_extensions.uploadable.validate_writable_directory
+        validate_writable_directory: true
+
+        # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
+        default_file_path:       "%kernel.root_dir%/../web/uploads"
+
+        # Mime type guesser class: Optional. By default, we provide an adapter for the one present in the HttpFoundation component of Symfony
+        mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
+
+        # Default file info class implementing FileInfoInterface: Optional. By default we provide a class which is prepared to receive an UploadedFile instance.
+        default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
+    orm:
+        default:
+            translatable:   false
+            blameable:      false
+            timestampable:  true
+            softdeleteable: true
+            tree:           false
+            uploadable:     false
+            sluggable:      false

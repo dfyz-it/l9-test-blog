@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -25,12 +26,12 @@ class User {
   private $id;
 
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string", length=50)
    */
   private $name;
 
   /**
-   * @ORM\Column(type="string", unique=true)
+   * @ORM\Column(type="string", unique=true,length=50)
    */
   private $email;
 

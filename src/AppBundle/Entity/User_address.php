@@ -25,17 +25,17 @@ class User_address {
   private $id;
 
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string",length=50)
    */
   private $city;
 
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string",length=20)
    */
   private $country;
 
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string",length=100)
    */
   private $street;
 

@@ -27,7 +27,9 @@ class PostController extends Controller {
       ->findAllPostByCategory($category_code);
 
     $posts = $this->get('knp_paginator')
-      ->paginate($posts, $request->query->get('page', 1), 5);
+      ->paginate($posts, $request->query->get('page', 1), 2);
+
+    dump($posts);
 
     return $this->render('blog/posts.html.twig', [
       'posts' => $posts,

@@ -11,10 +11,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity (repositoryClass="AppBundle\Repository\PostRepository")
  * @ORM\Table(name="post")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt",timeAware=false)
  */
 class Post {
 
@@ -26,12 +28,12 @@ class Post {
   private $id;
 
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string",length=255)
    */
   private $title;
 
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="text")
    */
   private $body;
 
@@ -45,11 +47,28 @@ class Post {
    * Many Category have many Posts.
    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
    * @ORM\JoinTable(name="posts_categories",
-   *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
-   *      inverseJoinColumns={@ORM\JoinColumn(name="categories_id", referencedColumnName="id")}
+   *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="categories_id", referencedColumnName="id")}
    * )
    */
   private $category;
+
+  /**
+   * @Gedmo\Timestampable(on="create")
+   * @ORM\Column(type="date")
+   */
+  private $created;
+
+  /**
+   * @ORM\Column(type="datetime")
+   * @Gedmo\Timestampable(on="update")
+   */
+  private $updated;
+
+
+  /**
+   * @ORM\Column(type="datetime", nullable=true)
+   */
+  private $deletedAt;
 
   public function __construct() {
     $this->category = new ArrayCollection();
@@ -124,6 +143,5 @@ class Post {
   public function setCategory(Category $category) {
     $this->category[] = $category;
   }
-
 
 }

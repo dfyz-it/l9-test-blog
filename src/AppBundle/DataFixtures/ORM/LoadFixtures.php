@@ -8,21 +8,14 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\User_address;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Nelmio\Alice\Loader\NativeLoader;
-
 
 class LoadFixtures extends Fixture {
 
   public function load(ObjectManager $manager) {
-    //    $loader = new NativeLoader();
-    //    $objectSet = $loader->loadFile(__DIR__.'/fixtures.yml')->getObjects();
-    //    foreach($objectSet as $object) {
-    //      $manager->persist($object);
-    //    }
-    //    $manager->flush();
 
     foreach ($this->category() as $key => $value) {
       $category = new Category();
+      $categories[] = $category;
       $category->setName($value);
       $category->setCode($key);
       $manager->persist($category);
@@ -34,7 +27,6 @@ class LoadFixtures extends Fixture {
       $user->setDateOfBirth(new \DateTime('2011-01-01T15:03:01.012345Z'));
       $user->setEmail('user' . $i . '@gmail.com');
 
-
       $user_address = new User_address();
       $user_address->setCity('city' . $i);
       $user_address->setCountry('country' . $i);
@@ -42,25 +34,20 @@ class LoadFixtures extends Fixture {
       $user_address->setStreet('street' . $i);
       $user_address->setUser($user);
 
-
       $manager->persist($user);
       $manager->persist($user_address);
 
       for ($f = 0; $f < 4; $f++) {
-
         $post = new Post();
-        $post->setTitle('title ' . rand(0,50));
-        $post->setBody('body ' . rand(0,50));
+        $post->setTitle('title ' . rand(0, 50));
+        $post->setBody('body ' . rand(0, 50));
         $post->setUser($user);
-        $post->setCategory($category);
+        $post->setCategory($categories[rand(0, 13)]);
         $manager->persist($post);
       }
     }
-
     $manager->flush();
-
   }
-
 
   public function category() {
     $categorys = [
