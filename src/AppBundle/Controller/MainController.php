@@ -10,20 +10,25 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class MainController extends Controller {
+class MainController extends Controller
+{
 
-  public function homepageAction() {
+    public function homepageAction()
+    {
 
-    $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-    $categorys = $em->getRepository('AppBundle:Category')
-      ->findAll();
+        $categorys = $em->getRepository('AppBundle:Category')
+          ->findAll();
 
-    return $this->render('main/homepage.html.twig', [
-      'categorys' => $categorys,
-    ]);
+        return $this->render(
+          'main/homepage.html.twig',
+          [
+            'categorys' => $categorys,
+          ]
+        );
 
-  }
+    }
 
 }
 
