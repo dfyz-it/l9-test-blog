@@ -76,14 +76,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
           ->findOneBy(['email' => $username]);
     }
 
-    public function checkCredentials($credentials, UserInterface $user) {
+    public function checkCredentials($credentials, UserInterface $user)
+    {
         $password = $credentials['_password'];
-
-//        dump($password);die();
         if ($this->passwordEncoder->isPasswordValid($user, $password)) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+
+        return false;
 
     }
 
