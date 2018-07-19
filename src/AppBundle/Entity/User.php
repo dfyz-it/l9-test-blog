@@ -43,6 +43,13 @@ class User implements UserInterface
      */
     private $date_of_birth;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+
+    private $plainPassword;
 
     /**
      * @return mixed
@@ -108,22 +115,6 @@ class User implements UserInterface
         $this->date_of_birth = $date_of_birth;
     }
 
-
-
-    public function getUsername()
-    {
-        return $this->email;
-    }
-
-    public function getRoles()
-    {
-         return ['ROLE_USER'];
-    }
-
-    public function getPassword()
-    {
-    }
-
     public function getSalt()
     {
     }
@@ -131,7 +122,53 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+        $this->plainPassword = null;
     }
+    
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
+    }
+
+
 
 
 

@@ -10,13 +10,15 @@ namespace AppBundle\Security;
 
 
 use AppBundle\Form\LoginForm;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
@@ -30,6 +32,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     private $em;
 
+    private $passwordEncoder;
+
 
     /**
      * LoginFormAuthenticator constructor.
@@ -37,12 +41,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function __construct(
       FormFactoryInterface $formFactory,
       EntityManagerInterface $em,
-      RouterInterface $router
+      RouterInterface $router,
+      UserPasswordEncoderInterface $passwordEncoder
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->router = $router;
 
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function getCredentials(Request $request)
@@ -70,15 +76,17 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
           ->findOneBy(['email' => $username]);
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
-    {
+    public function checkCredentials($credentials, UserInterface $user) {
         $password = $credentials['_password'];
-        if ($password == '123') {
-            return true;
-        }
 
-        return false;
+//        dump($password);die();
+        if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+            return TRUE;
+        }
+        return FALSE;
+
     }
+
 
     protected function getLoginUrl()
     {

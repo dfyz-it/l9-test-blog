@@ -28,7 +28,7 @@ class LoadFixtures extends Fixture
             $user->setName('user'.$i);
             $user->setDateOfBirth(new \DateTime('2011-01-01T15:03:01.012345Z'));
             $user->setEmail('user'.$i.'@gmail.com');
-//            $user->setPassword('123');
+            $user->setPlainPassword('asd');
 
             $user_address = new User_address();
             $user_address->setCity('city'.$i);
