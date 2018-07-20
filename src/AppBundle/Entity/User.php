@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @UniqueEntity(fields={"email"}, message="Already exist")
  */
 class User implements UserInterface
 {
@@ -29,12 +31,15 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=50)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", unique=true,length=50)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @ORM\Column(type="string", unique=true, length=50)
      */
     private $email;
 
@@ -43,13 +48,35 @@ class User implements UserInterface
      */
     private $date_of_birth;
 
+
+    /**
+     * @ORM\Column(type="string", nullable=true, length=100)
+     */
+    private $street;
+
+    /**
+     * @ORM\Column(type="string", nullable=true,  length=20)
+     */
+    private $house;
+
     /**
      * @ORM\Column(type="string")
      */
     private $password;
 
-
+    /**
+     * @Assert\NotBlank(groups={"Registration"})
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 255
+     * )
+     */
     private $plainPassword;
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $roles = [];
 
     /**
      * @return mixed
@@ -115,6 +142,39 @@ class User implements UserInterface
         $this->date_of_birth = $date_of_birth;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * @param mixed $street
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHouse()
+    {
+        return $this->house;
+    }
+
+    /**
+     * @param mixed $house
+     */
+    public function setHouse($house)
+    {
+        $this->house = $house;
+    }
+
+
     public function getSalt()
     {
     }
@@ -124,15 +184,26 @@ class User implements UserInterface
     {
         $this->plainPassword = null;
     }
-    
+
     public function getUsername()
     {
         return $this->email;
     }
 
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return $roles;
     }
 
     /**
@@ -167,9 +238,6 @@ class User implements UserInterface
         $this->plainPassword = $plainPassword;
         $this->password = null;
     }
-
-
-
 
 
 }

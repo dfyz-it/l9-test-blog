@@ -6,8 +6,10 @@
                 <h1>Register!</h1>
                 {{ form_start(form) }}
                 {{ form_row(form.name) }}
-                {{ form_row(form.date_of_birth) }}
                 {{ form_row(form.email) }}
+                {{ form_row(form.street) }}
+                {{ form_row(form.house) }}
+                {{ form_row(form.date_of_birth) }}
                 {{ form_row(form.plainPassword.first, {
                     'label': 'Password'
                 }) }}

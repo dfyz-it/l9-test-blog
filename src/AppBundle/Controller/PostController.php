@@ -31,8 +31,6 @@ class PostController extends Controller
         $posts = $this->get('knp_paginator')
           ->paginate($posts, $request->query->get('page', 1), 2);
 
-        dump($posts);
-
         return $this->render(
           'blog/posts.html.twig',
           [

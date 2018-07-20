@@ -28,7 +28,18 @@ class LoadFixtures extends Fixture
             $user->setName('user'.$i);
             $user->setDateOfBirth(new \DateTime('2011-01-01T15:03:01.012345Z'));
             $user->setEmail('user'.$i.'@gmail.com');
-            $user->setPlainPassword('asd');
+            $user->setPlainPassword('asdasdasd');
+            switch ($i) {
+                case 0:
+                    $user->setRoles(['ROLE_ADMIN','ROLE_USER']);
+                    break;
+                case 1:
+                    $user->setRoles(['ROLE_MANAGER','ROLE_USER']);
+                    break;
+                default:
+                    $user->setRoles(['ROLE_USER']);
+            }
+
 
             $user_address = new User_address();
             $user_address->setCity('city'.$i);

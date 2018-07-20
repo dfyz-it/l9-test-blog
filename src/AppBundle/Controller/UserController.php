@@ -29,6 +29,7 @@ class UserController extends Controller
 
             /** @var \AppBundle\Entity\User $user */
             $user = $form->getData();
+            $user->setRoles(['ROLE_USER']);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

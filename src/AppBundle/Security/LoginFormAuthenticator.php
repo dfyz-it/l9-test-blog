@@ -87,7 +87,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     }
 
-
     protected function getLoginUrl()
     {
         return $this->router->generate('security_login');
@@ -97,6 +96,5 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         return $this->router->generate('homepage');
     }
-
 
 }
