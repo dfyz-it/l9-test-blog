@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
@@ -43,6 +42,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
       EntityManagerInterface $em,
       RouterInterface $router,
       UserPasswordEncoderInterface $passwordEncoder
+
     ) {
         $this->formFactory = $formFactory;
         $this->em = $em;
@@ -79,7 +79,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         $password = $credentials['_password'];
-        if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+
+        if ($this->passwordEncoder->isPasswordValid($user, $password) && $user->getConfirmed() == TRUE ) {
             return true;
         }
 

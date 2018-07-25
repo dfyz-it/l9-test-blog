@@ -34,6 +34,12 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+#    app.confirm_register_code:
+#        class: AppBundle\Service\ConfirmRegisterCodeCheck
+#         autowire: true
+
+
     app.security.login_form_authenticator:
          class: AppBundle\Security\LoginFormAuthenticator
          autowire: true

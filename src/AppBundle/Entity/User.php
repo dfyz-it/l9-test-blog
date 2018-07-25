@@ -78,6 +78,12 @@ class User implements UserInterface
      */
     private $roles = [];
 
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $confirmed;
+
     /**
      * @return mixed
      */
@@ -237,6 +243,22 @@ class User implements UserInterface
     {
         $this->plainPassword = $plainPassword;
         $this->password = null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmed()
+    {
+        return $this->confirmed;
+    }
+
+    /**
+     * @param mixed $confirmed
+     */
+    public function setConfirmed($confirmed)
+    {
+        $this->confirmed = $confirmed;
     }
 
 
