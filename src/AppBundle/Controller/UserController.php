@@ -40,15 +40,13 @@ class UserController extends Controller
             $em->flush();
 
 
-
-
-            $user_code = new ConfirmRegisterCodeService();
-            $user_code2 = $user_code->setConfirmCode($user);
-
-            $em->persist($user_code2);
+            $transformer = new ConfirmRegisterCodeService();
+            $user_code = $transformer->createConfirmCode($user);
+            $em->persist($user_code);
             $em->flush();
 
             $this->addFlash('success', 'Welcome '.$user->getEmail());
+
             return $this->get('security.authentication.guard_handler')
               ->authenticateUserAndHandleSuccess(
                 $user,
@@ -118,4 +116,5 @@ class UserController extends Controller
           ]
         );
     }
+
 }

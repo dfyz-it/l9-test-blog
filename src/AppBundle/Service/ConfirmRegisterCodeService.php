@@ -37,7 +37,7 @@ class ConfirmRegisterCodeService
         return $user;
     }
 
-    public function setConfirmCode(User $user)
+    public function createConfirmCode(User $user)
     {
         $user_code = new ConfirmRegisterCode();
         $user_code->setConfirmCode(rand(100, 999));
