@@ -46,4 +46,5 @@ class ConfirmRegisterCodeService
 
         return $user_code;
     }
+
 }

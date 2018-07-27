@@ -20,13 +20,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class UserController extends Controller
 {
 
+
+    private $confirmregistercode;
+
+
+    public function __construct(ConfirmRegisterCodeService $confirmregistercode)
+    {
+        $this->confirmregistercode = $confirmregistercode;
+    }
+
+
     /**
      * @Route("/register", name="user_register")
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request, \Swift_Mailer $mailer)
     {
         $form = $this->createForm(UserRegistrationForm::class);
         $form->handleRequest($request);
+
         if ($form->isValid()) {
 
             /** @var \AppBundle\Entity\User $user */
@@ -34,26 +45,41 @@ class UserController extends Controller
             $user->setRoles(['ROLE_USER']);
             $user->setConfirmed(false);
 
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-
-            $transformer = new ConfirmRegisterCodeService();
-            $user_code = $transformer->createConfirmCode($user);
+            $user_code = $this->getConfirmregistercode()->createConfirmCode(
+              $user
+            );
             $em->persist($user_code);
             $em->flush();
 
-            $this->addFlash('success', 'Welcome '.$user->getEmail());
-
-            return $this->get('security.authentication.guard_handler')
-              ->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $this->get('app.security.login_form_authenticator'),
-                'main'
+            $message = (new \Swift_Message('Hello Email'))
+              ->setFrom('send@example.com')
+              ->setTo('recipient@example.com')
+              ->setBody(
+                $this->renderView(
+                  'emails/ConfirmMail.html.twig',
+                  array(
+                    'name' => $user->getName(),
+                    'id' => $user->getId(),
+                    'code' => $user_code->getConfirmCode(),
+                  )
+                ),
+                'text/html'
               );
+
+            $mailer->send($message);
+
+
+            $this->addFlash(
+              'success',
+              'Confirm you email from mail '.$user->getEmail()
+            );
+
+           return $this->redirectToRoute('homepage');
+
         }
 
         return $this->render(
@@ -82,30 +108,31 @@ class UserController extends Controller
 
             $confirm_code_from_form = $form->getData();
 
-            $RegisterCode = New ConfirmRegisterCodeService();
-
-            if ($RegisterCode->isRegisterCodeValid(
+            if ($this->getConfirmregistercode()->isRegisterCodeValid(
               $confirm_code_from_db,
               $confirm_code_from_form
             )) {
 
-                $RegisterCode->ChangeConfirmStatus($user, true);
+                $this->getConfirmregistercode()->ChangeConfirmStatus(
+                  $user,
+                  true
+                );
 
                 $em->persist($user);
                 $em->flush();
 
                 $this->addFlash('success', 'Email Confirmed');
 
-                return $this->render(
-                  'user/emailconfirm.html.twig',
-                  [
-                    'form' => $form->createView(),
-                  ]
-                );
+                return $this->get('security.authentication.guard_handler')
+                  ->authenticateUserAndHandleSuccess(
+                    $user,
+                    $request,
+                    $this->get('app.security.login_form_authenticator'),
+                    'main'
+                  );
             }
 
         }
-
 
         $this->addFlash('success', 'nope');
 
@@ -116,5 +143,15 @@ class UserController extends Controller
           ]
         );
     }
+
+
+    /**
+     * @return \AppBundle\Service\ConfirmRegisterCodeService
+     */
+    public function getConfirmregistercode()
+    {
+        return $this->confirmregistercode;
+    }
+
 
 }
