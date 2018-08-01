@@ -25,27 +25,10 @@ class AdminController extends Controller
     /**
      * @Route("/", name="admin_button")
      */
-    public function indexAction(\Swift_Mailer $mailer)
+    public function indexAction()
     {
 
         $btn = 'assd';
-
-       $message = (New \Swift_Message('hi mail'))
-         ->setFrom('send@example.com')
-         ->setTo('goruachev42@gmail.com')
-         ->setBody(
-           $this->render(
-             'admin/mail.html.twig',
-             array(
-               'btn' => $btn,
-             )
-           ),
-         'text/html'
-         );
-
-        $mailer->send($message);
-
-
 
         return $this->render(
           'admin/select.html.twig',
