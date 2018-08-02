@@ -78,7 +78,7 @@ class UserController extends Controller
               'Confirm you email from mail '.$user->getEmail()
             );
 
-           return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('homepage');
 
         }
 

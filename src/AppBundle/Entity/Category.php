@@ -13,68 +13,88 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  * @ORM\Table(name="category")
  */
-class Category {
+class Category
+{
 
-  /**
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   * @ORM\Column(type="integer")
-   */
-  private $id;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-  /**
-   * @ORM\Column(type="string",length=20)
-   */
-  private $code;
+    /**
+     * @ORM\Column(type="string",length=20)
+     */
+    private $code;
 
-  /**
-   * @ORM\Column(type="string",length=50)
-   */
-  private $name;
+    /**
+     * @ORM\Column(type="string",length=50)
+     */
+    private $name;
 
-  /**
-   * @return mixed
-   */
-  public function getId() {
-    return $this->id;
-  }
 
-  /**
-   * @param mixed $id
-   */
-  public function setId($id) {
-    $this->id = $id;
-  }
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Post", mappedBy="category")
+     */
+    private $posts;
 
-  /**
-   * @return mixed
-   */
-  public function getCode() {
-    return $this->code;
-  }
+    public function __construct($posts)
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
-  /**
-   * @param mixed $code
-   */
-  public function setCode($code) {
-    $this->code = $code;
-  }
 
-  /**
-   * @return mixed
-   */
-  public function getName() {
-    return $this->name;
-  }
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * @param mixed $name
-   */
-  public function setName($name) {
-    $this->name = $name;
-  }
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param mixed $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
 }

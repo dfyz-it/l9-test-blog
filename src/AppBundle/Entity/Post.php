@@ -18,130 +18,142 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="post")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt",timeAware=false)
  */
-class Post {
+class Post
+{
 
-  /**
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   * @ORM\Column(type="integer")
-   */
-  private $id;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-  /**
-   * @ORM\Column(type="string",length=255)
-   */
-  private $title;
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $title;
 
-  /**
-   * @ORM\Column(type="text")
-   */
-  private $body;
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $body;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-   * @ORM\JoinColumn(nullable=false)
-   */
-  private $user;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
-  /**
-   * Many Category have many Posts.
-   * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category")
-   * @ORM\JoinTable(name="posts_categories",
-   *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="categories_id", referencedColumnName="id")}
-   * )
-   */
-  private $category;
+    /**
+     * Many Category have many Posts.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category", inversedBy="posts")
+     * @ORM\JoinTable(name="posts_categories",
+     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="categories_id", referencedColumnName="id")}
+     * )
+     */
+    private $category;
 
-  /**
-   * @Gedmo\Timestampable(on="create")
-   * @ORM\Column(type="date")
-   */
-  private $created;
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="date")
+     */
+    private $created;
 
-  /**
-   * @ORM\Column(type="datetime")
-   * @Gedmo\Timestampable(on="update")
-   */
-  private $updated;
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
 
 
-  /**
-   * @ORM\Column(type="datetime", nullable=true)
-   */
-  private $deletedAt;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
-  public function __construct() {
-    $this->category = new ArrayCollection();
-  }
+    public function __construct()
+    {
+        $this->category = new ArrayCollection();
+    }
 
-  /**
-   * @return mixed
-   */
-  public function getId() {
-    return $this->id;
-  }
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * @param mixed $id
-   */
-  public function setId($id) {
-    $this->id = $id;
-  }
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-  /**
-   * @return mixed
-   */
-  public function getTitle() {
-    return $this->title;
-  }
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-  /**
-   * @param mixed $title
-   */
-  public function setTitle($title) {
-    $this->title = $title;
-  }
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
 
-  /**
-   * @return mixed
-   */
-  public function getBody() {
-    return $this->body;
-  }
+    /**
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
 
-  /**
-   * @param mixed $body
-   */
-  public function setBody($body) {
-    $this->body = $body;
-  }
+    /**
+     * @param mixed $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
 
-  /**
-   * @return mixed
-   */
-  public function getUser() {
-    return $this->user;
-  }
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
-  /**
-   * @param mixed $user
-   */
-  public function setUser(User $user) {
-    $this->user = $user;
-  }
+    /**
+     * @param mixed $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
 
-  /**
-   * @return mixed
-   */
-  public function getCategory() {
-    return $this->category;
-  }
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
 
-  /**
-   * @param \AppBundle\Entity\Category $category
-   */
-  public function setCategory(Category $category) {
-    $this->category[] = $category;
-  }
+    /**
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category[] = $category;
+    }
 
 }

@@ -80,12 +80,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         $password = $credentials['_password'];
 
-        if ($this->passwordEncoder->isPasswordValid($user, $password) && $user->getConfirmed() == 1 ) {
+        if ($this->passwordEncoder->isPasswordValid(
+            $user,
+            $password
+          ) && $user->getConfirmed() == 1 && $user->getBlocked() != 1) {
             return true;
         }
 
         return false;
-
     }
 
     protected function getLoginUrl()

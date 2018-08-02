@@ -1,0 +1,10 @@
+{{ form_start(userForm) }}
+    {{ form_row(userForm.name) }}
+    {{ form_row(userForm.email) }}
+    {{ form_row(userForm.dateOfBirth) }}
+    {{ form_row(userForm.street) }}
+    {{ form_row(userForm.house) }}
+    {{ form_row(userForm.confirmed) }}
+    {{ form_row(userForm.blocked) }}
+<button type="submit" class="btn btn-primary" formnovalidate>Save</button>
+{{ form_end(userForm) }}

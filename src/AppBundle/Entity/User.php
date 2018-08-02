@@ -85,6 +85,11 @@ class User implements UserInterface
     private $confirmed;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $blocked;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -259,6 +264,22 @@ class User implements UserInterface
     public function setConfirmed($confirmed)
     {
         $this->confirmed = $confirmed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBlocked()
+    {
+        return $this->blocked;
+    }
+
+    /**
+     * @param mixed $blocked
+     */
+    public function setBlocked($blocked)
+    {
+        $this->blocked = $blocked;
     }
 
 

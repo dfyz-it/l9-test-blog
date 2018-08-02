@@ -19,12 +19,22 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $categorys = $em->getRepository('AppBundle:Category')
-          ->findAll();
+        ->findAllCategoryswithPosts();
 
+//dump($categorys);die();
+
+//foreach ($categorys)
+//        $recentPosts = $em->getRepository("AppBundle:Post")
+//          ->findAllPostByCategory(5);
+
+
+        //findAllRecentNotesForGenus
         return $this->render(
           'main/homepage.html.twig',
           [
             'categorys' => $categorys,
+            'recentPostsCount' => 1,
+//            'recentPostsCount' => count($recentPosts),
           ]
         );
 

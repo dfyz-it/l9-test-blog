@@ -5,7 +5,8 @@
         <div class="row">
 
             {% if is_granted('ROLE_ADMIN') %}
-                {{ 'ROLE_ADMIN' }} </br>
+                <a href="/admin/users" class="btn btn-primary pull-right">Users list <span class="fa"></span></a>
+                </br>
             {% endif %}
             {% if is_granted('ROLE_MANAGER') %}
                 {{ 'ROLE_MANAGER' }}
