@@ -20,8 +20,10 @@ class PostController extends Controller
      * @Route("/{category_code}/posts", name="category_show_posts")
      * @Method("GET")
      */
-    public function getPostAction($category_code, Request $request)
-    {
+    public function getPostbyCategoryCodeAction(
+      $category_code,
+      Request $request
+    ) {
 
         $em = $this->getDoctrine()->getManager();
 
@@ -30,6 +32,31 @@ class PostController extends Controller
 
         $posts = $this->get('knp_paginator')
           ->paginate($posts, $request->query->get('page', 1), 2);
+
+        return $this->render(
+          'blog/posts.html.twig',
+          [
+            'posts' => $posts,
+          ]
+        );
+    }
+
+    /**
+     * @Route("/{user_id}/myposts", name="user_show_posts")
+     * @Method("GET")
+     */
+    public function getPostbyUserAction($user_id, Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $posts = $em->getRepository('AppBundle:Post')
+          ->findBy(
+            ['user' => $user_id]
+          );
+
+        $posts = $this->get('knp_paginator')
+          ->paginate($posts, $request->query->get('page', 1), 7);
 
         return $this->render(
           'blog/posts.html.twig',

@@ -29,4 +29,26 @@ class PostRepository extends EntityRepository
           ->getQuery()
           ->execute();
     }
+
+
+    /**
+     * @return \AppBundle\Entity\Post[]
+     */
+    public function findAllPostByUser($category_code)
+    {
+
+        return $this->createQueryBuilder('post')
+          ->leftJoin('post.user', 'u')
+          ->addSelect('u')
+          ->join('post.category', 'c')
+          ->where('c.code = :id')
+          ->setParameter('id', $category_code)
+          ->orderBy('post.id', 'DESC')
+          ->getQuery()
+          ->execute();
+    }
+
+
+
+
 }
