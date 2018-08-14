@@ -21,10 +21,15 @@ class CategoryRepository extends EntityRepository
     {
         return $this->createQueryBuilder('category')
           ->leftJoin('category.posts', 'cp')
-
-
           ->getQuery()
           ->execute();
+    }
+
+
+    public function createAlphabeticalQueryBuilder()
+    {
+        return $this->createQueryBuilder('category')
+          ->orderBy('category.name', 'ASC');
     }
 }
 
