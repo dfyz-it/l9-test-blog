@@ -123,7 +123,17 @@ class PostController extends Controller
     /**
      * @Route("/post/{id}/edit", name="post_edit")
      */
-    public function editAction(Request $request, Post $post) {
+    public function editAction(Request $request, Post $post)
+    {
+
+        //        if (!$this->get('security.authorization_checker')->isGranted(
+        //            'ROLE_ADMIN'
+        //          ) ||
+
+        if ($this->getUser()->getId() != $post->getUser()->getId()) {
+            throw $this->createAccessDeniedException('wrong user');
+        }
+
         $form = $this->createForm(PostForm::class, $post);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -132,10 +142,15 @@ class PostController extends Controller
             $em->persist($post);
             $em->flush();
             $this->addFlash('success', 'Post updated!');
-            return $this->redirectToRoute( 'homepage');
+
+            return $this->redirectToRoute('homepage');
         }
-        return $this->render('blog/form/FormPost.html.twig', [
-          'form' => $form->createView(),
-        ]);
+
+        return $this->render(
+          'blog/form/FormPost.html.twig',
+          [
+            'form' => $form->createView(),
+          ]
+        );
     }
 }

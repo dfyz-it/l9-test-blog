@@ -14,8 +14,6 @@ class PostForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        //$category
         $builder
           ->add('title')
           ->add(
@@ -30,9 +28,6 @@ class PostForm extends AbstractType
               'query_builder' => function (CategoryRepository $repo) {
                   return $repo->createAlphabeticalQueryBuilder();
               },
-                //              'choice_value' => function (Category $category = null) {
-                //                  return $category ? $category->getName() : '';
-                //              },
             ]
           )
           ->add('body');
