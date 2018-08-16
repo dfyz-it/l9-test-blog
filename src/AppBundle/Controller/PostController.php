@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Post;
+use AppBundle\Entity\User;
 use AppBundle\Form\PostForm;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -65,39 +66,28 @@ class PostController extends Controller
           'blog/posts.html.twig',
           [
             'posts' => $posts,
+            'user_id' => $this->getUser()->getId(),
           ]
         );
     }
 
     /**
-     * @Route("/{user_id}/myposts/add", name="user_add_post")
+     * @Route("/{user}/myposts/add", name="user_add_post")
      */
-    public function addUserPostAction($user_id, Request $request)
+    public function addUserPostAction(Request $request, User $user)
     {
-
         $form = $this->createForm(PostForm::class);
         $form->handleRequest($request);
-
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')
-          ->findOneBy(
-            ['id' => $user_id]
-          );
-
 
         if ($form->isValid()) {
 
             /** @var \AppBundle\Entity\Post $post */
             $post = $form->getData();
-            //            $post->setCategory(1);
-
-
             $post->setUser($user);
+            $post->setChecked(false);
 
             //            $user->setRoles(['ROLE_USER']);
             //            $user->setConfirmed(false);
-
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);

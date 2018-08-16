@@ -28,6 +28,6 @@
 
     {{ knp_pagination_render(posts) }}
 
-    <a href="/{{ app.user.id }}/myposts/add"> Add new</a>
+    <a href="{{ path('user_add_post',{'user': user_id}) }}"> Add new </a>
 {% endblock %}
 

@@ -53,6 +53,12 @@ class Post
      */
     private $category;
 
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $checked;
+
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="date")
@@ -149,11 +155,28 @@ class Post
     }
 
     /**
-     * @param \AppBundle\Entity\Category $category
+     * @param \AppBundle\Entity\Category $category[]
      */
     public function setCategory(Category $category)
     {
         $this->category[] = $category;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getChecked()
+    {
+        return $this->checked;
+    }
+
+    /**
+     * @param mixed $checked
+     */
+    public function setChecked($checked)
+    {
+        $this->checked = $checked;
+    }
+
 
 }
