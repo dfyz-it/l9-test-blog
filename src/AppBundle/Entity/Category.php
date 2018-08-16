@@ -43,9 +43,9 @@ class Category
      */
     private $posts;
 
-    public function __construct($posts)
+    public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
 

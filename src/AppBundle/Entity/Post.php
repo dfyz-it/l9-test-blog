@@ -155,11 +155,11 @@ class Post
     }
 
     /**
-     * @param \AppBundle\Entity\Category $category[]
+     * @param mixed
      */
-    public function setCategory(Category $category)
+    public function setCategory($category)
     {
-        $this->category[] = $category;
+        $this->category = $category;
     }
 
     /**

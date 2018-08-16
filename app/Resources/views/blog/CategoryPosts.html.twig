@@ -7,7 +7,7 @@
         <tr>
             <th>Posts</th>
             <th>Body</th>
-            <th>User</th>
+            <th>Is Checked</th>
             <th> </th>
         </tr>
         </thead>
@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ post.title }}</td>
                 <td>{{ post.body }}</td>
-                <td>{{ post.user.name }}</td>
+                <td>{{ post.checked ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('post_edit',{'id': post.id}) }}"
                        class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
@@ -28,6 +28,5 @@
 
     {{ knp_pagination_render(posts) }}
 
-    <a href="{{ path('user_add_post',{'user': user_id}) }}"> Add new </a>
 {% endblock %}
 

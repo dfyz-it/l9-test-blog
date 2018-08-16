@@ -22,7 +22,7 @@ class PostForm extends AbstractType
             [
               'placeholder' => 'Chose a Category',
               'class' => Category::class,
-              'expanded' => false,
+              'expanded' => true,
               'multiple' => true,
               'choice_label' => 'name',
               'query_builder' => function (CategoryRepository $repo) {

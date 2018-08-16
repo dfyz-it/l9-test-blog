@@ -38,7 +38,7 @@ class PostController extends Controller
           ->paginate($posts, $request->query->get('page', 1), 2);
 
         return $this->render(
-          'blog/posts.html.twig',
+          'blog/CategoryPosts.html.twig',
           [
             'posts' => $posts,
           ]
@@ -49,7 +49,7 @@ class PostController extends Controller
      * @Route("/{user_id}/myposts", name="user_show_posts")
      * @Method("GET")
      */
-    public function getPostbyUserAction($user_id, Request $request)
+    public function getPostbyUserAction( Request $request, $user_id)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -63,7 +63,7 @@ class PostController extends Controller
           ->paginate($posts, $request->query->get('page', 1), 7);
 
         return $this->render(
-          'blog/posts.html.twig',
+          'blog/UserPosts.html.twig',
           [
             'posts' => $posts,
             'user_id' => $this->getUser()->getId(),
@@ -128,6 +128,7 @@ class PostController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $post = $form->getData();
+            $post->setChecked(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();

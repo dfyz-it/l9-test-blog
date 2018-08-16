@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Posts</th>
+            <th>Body</th>
+            <th>Is Checked</th>
+            <th> </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.body }}</td>
+                <td>{{ post.checked ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('post_edit',{'id': post.id}) }}"
+                       class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ knp_pagination_render(posts) }}
+
+    <a href="{{ path('user_add_post',{'user': user_id}) }}"> Add new </a>
+{% endblock %}
+
