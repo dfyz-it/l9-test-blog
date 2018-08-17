@@ -11,6 +11,11 @@ Flexbox Layout
     justify-content: space-between;
 }
 
+.red {
+    text-decoration: underline;
+    color: red;
+}
+
 .navi {
     flex: 1;
     justify-content: flex-end;

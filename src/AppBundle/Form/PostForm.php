@@ -30,6 +30,7 @@ class PostForm extends AbstractType
               },
             ]
           )
+          ->add('checked')
           ->add('body');
     }
 

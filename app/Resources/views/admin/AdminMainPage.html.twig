@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin/users" class="btn btn-primary pull-right">Users list <span class="fa"></span></a>
+            {% endif %}
+            {% if is_granted('ROLE_MANAGER') %}
+                {{ 'ROLE_MANAGER' }}
+            {% endif %}
+        </div>
+        <div class="row">
+            <ul>
+                <a href="{{ path('admin_main_page',{'filter': NULL}) }}"
+                   class="">all</a>
+                <a href="{{ path('admin_main_page',{'filter': 1}) }}"
+                   class="">Checked</a>
+                <a href="{{ path('admin_main_page',{'filter': 0}) }}"
+                   class="">Not checked</a>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Posts</th>
+            <th>Body</th>
+            <th>Is Checked</th>
+            <th> </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr class="{{ post.checked ? 'normal' : 'red' }}">
+                <td>{{ post.title }}</td>
+                <td>{{ post.body }}</td>
+                <td>{{ post.checked ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('post_edit',{'id': post.id}) }}"
+                       class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

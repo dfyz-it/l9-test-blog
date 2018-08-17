@@ -16,7 +16,7 @@ class PostRepository extends EntityRepository
     /**
      * @return \AppBundle\Entity\Post[]
      */
-    public function findAllPostByCategory($category_code)
+    public function findAllPostByCategoryChecked($category_code)
     {
 
         return $this->createQueryBuilder('post')
@@ -25,6 +25,8 @@ class PostRepository extends EntityRepository
           ->join('post.category', 'c')
           ->where('c.code = :id')
           ->setParameter('id', $category_code)
+          ->andWhere('post.checked = :checked')
+          ->setParameter('checked', TRUE)
           ->orderBy('post.id', 'DESC')
           ->getQuery()
           ->execute();
@@ -49,6 +51,21 @@ class PostRepository extends EntityRepository
     }
 
 
+    public function createQueryAdminFilter($filter = NULL)
+    {
 
+        if(is_null($filter)){
+            return $this->createQueryBuilder('post')
+              ->orderBy('post.id', 'DESC')
+              ->getQuery()
+              ->execute();
+        }
+        return $this->createQueryBuilder('post')
+          ->where('post.checked = :checked')
+          ->setParameter('checked', $filter)
+          ->orderBy('post.id', 'DESC')
+          ->getQuery()
+          ->execute();
+    }
 
 }

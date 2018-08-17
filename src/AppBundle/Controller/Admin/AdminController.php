@@ -9,6 +9,7 @@
 namespace AppBundle\Controller\Admin;
 
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,17 +24,20 @@ class AdminController extends Controller
 {
 
     /**
-     * @Route("/", name="admin_button")
+     * @Route("/{filter}", name="admin_main_page")
+     * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($filter = NULL)
     {
 
-        $btn = 'assd';
+        $em = $this->getDoctrine()->getManager();
+        $posts = $em->getRepository('AppBundle:Post')
+          ->createQueryAdminFilter($filter);
 
         return $this->render(
-          'admin/select.html.twig',
+          'admin/AdminMainPage.html.twig',
           array(
-            'btn' => $btn,
+            'posts' => $posts,
           )
         );
     }

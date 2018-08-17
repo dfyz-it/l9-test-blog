@@ -32,7 +32,7 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $posts = $em->getRepository('AppBundle:Post')
-          ->findAllPostByCategory($category_code);
+          ->findAllPostByCategoryChecked($category_code);
 
         $posts = $this->get('knp_paginator')
           ->paginate($posts, $request->query->get('page', 1), 2);
@@ -49,7 +49,7 @@ class PostController extends Controller
      * @Route("/{user_id}/myposts", name="user_show_posts")
      * @Method("GET")
      */
-    public function getPostbyUserAction( Request $request, $user_id)
+    public function getPostbyUserAction(Request $request, $user_id)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -115,33 +115,41 @@ class PostController extends Controller
      */
     public function editAction(Request $request, Post $post)
     {
+        if ($this->getUser()->getId() == $post->getUser()->getId()
+          || !$this->get('security.authorization_checker')->isGranted(
+            'ROLE_MANAGER'
+          )) {
+            $form = $this->createForm(PostForm::class, $post);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $post = $form->getData();
+                if (!$this->get('security.authorization_checker')->isGranted(
+                  'ROLE_MANAGER'
+                )) {
+                    $post->setChecked(false);
+                }
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($post);
+                $em->flush();
+                $this->addFlash('success', 'Post updated!');
 
-        //        if (!$this->get('security.authorization_checker')->isGranted(
-        //            'ROLE_ADMIN'
-        //          ) ||
+                return $this->redirectToRoute(
+                  'post_edit',
+                  [
+                    'id' => $post->getId(),
+                  ]
+                );
+            }
 
-        if ($this->getUser()->getId() != $post->getUser()->getId()) {
+            return $this->render(
+              'blog/form/FormPost.html.twig',
+              [
+                'form' => $form->createView(),
+              ]
+            );
+
+        } else {
             throw $this->createAccessDeniedException('wrong user');
         }
-
-        $form = $this->createForm(PostForm::class, $post);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $post = $form->getData();
-            $post->setChecked(false);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
-            $this->addFlash('success', 'Post updated!');
-
-            return $this->redirectToRoute('homepage');
-        }
-
-        return $this->render(
-          'blog/form/FormPost.html.twig',
-          [
-            'form' => $form->createView(),
-          ]
-        );
     }
 }
