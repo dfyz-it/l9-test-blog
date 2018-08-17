@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ app.request('id')}}
     <div class="container">
         <div class="row">
             {% if is_granted('ROLE_ADMIN') %}
@@ -18,7 +19,6 @@
                    class="">Checked</a>
                 <a href="{{ path('admin_main_page',{'filter': 0}) }}"
                    class="">Not checked</a>
-
             </ul>
         </div>
     </div>
@@ -31,6 +31,7 @@
             <th>Body</th>
             <th>Is Checked</th>
             <th> </th>
+            <th> </th>
         </tr>
         </thead>
         <tbody>
@@ -38,13 +39,17 @@
             <tr class="{{ post.checked ? 'normal' : 'red' }}">
                 <td>{{ post.title }}</td>
                 <td>{{ post.body }}</td>
-                <td>{{ post.checked ? 'Yes' : 'No' }}</td>
+                <td>{{ post.checked ? 'Yes' : 'No' }}</td>.
                 <td>
                     <a href="{{ path('post_edit',{'id': post.id}) }}"
                        class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
                 </td>
+
+                <td><input type="checkbox" name="checkBox[]"  id="ic" value={{ post.id }}/></td>
+
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}

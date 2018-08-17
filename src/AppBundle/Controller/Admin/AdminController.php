@@ -30,6 +30,7 @@ class AdminController extends Controller
     public function indexAction($filter = NULL)
     {
 
+
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository('AppBundle:Post')
           ->createQueryAdminFilter($filter);
@@ -41,5 +42,7 @@ class AdminController extends Controller
           )
         );
     }
+
+
 
 }
