@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ app.request('id')}}
+
     <div class="container">
         <div class="row">
             {% if is_granted('ROLE_ADMIN') %}
