@@ -116,7 +116,7 @@ class PostController extends Controller
     public function editAction(Request $request, Post $post)
     {
         if ($this->getUser()->getId() == $post->getUser()->getId()
-          || !$this->get('security.authorization_checker')->isGranted(
+          || $this->get('security.authorization_checker')->isGranted(
             'ROLE_MANAGER'
           )) {
             $form = $this->createForm(PostForm::class, $post);
