@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 /**
- *
  * @Security("is_granted('ROLE_MANAGER')")
  * @Route("/admin")
  */
@@ -24,12 +23,11 @@ class AdminController extends Controller
 {
 
     /**
-     * @Route("/{filter}", name="admin_main_page")
+     * @Route("{filter}", name="admin_main_page")
      * @Method("GET")
      */
     public function indexAction($filter = NULL)
     {
-
 
         $em = $this->getDoctrine()->getManager();
         $posts = $em->getRepository('AppBundle:Post')
@@ -42,7 +40,4 @@ class AdminController extends Controller
           )
         );
     }
-
-
-
 }

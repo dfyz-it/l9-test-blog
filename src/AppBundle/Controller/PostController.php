@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\User;
 use AppBundle\Form\PostForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -63,7 +64,7 @@ class PostController extends Controller
           ->paginate($posts, $request->query->get('page', 1), 7);
 
         return $this->render(
-          'blog/UserPosts.html.twig',
+          'blog/CategoryPosts.html.twig',
           [
             'posts' => $posts,
             'user_id' => $this->getUser()->getId(),
@@ -151,5 +152,29 @@ class PostController extends Controller
         } else {
             throw $this->createAccessDeniedException('wrong user');
         }
+    }
+
+    /**
+     * @Route("/admin/masscheck", name="mass_check_action")
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     */
+    public function massCheckAction(Request $request){
+
+//        $form->handleRequest($request);
+       $id_listls = $request->get('id');
+//        $isLoginSubmit = $request->getPathInfo() == '/admin' && $request->isMethod('POST');
+//        if (!$isLoginSubmit) {
+//            return;
+//        }
+
+//        $this->addFlash('success', $id);
+
+        return $this->redirectToRoute(
+          'admin_main_page',
+          [
+            'id' => 123,
+          ]
+        );
     }
 }

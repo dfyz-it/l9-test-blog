@@ -2,6 +2,8 @@
 
 {% block body %}
 
+
+
     <div class="container">
         <div class="row">
             {% if is_granted('ROLE_ADMIN') %}
@@ -35,6 +37,7 @@
         </tr>
         </thead>
         <tbody>
+
         {% for post in posts %}
             <tr class="{{ post.checked ? 'normal' : 'red' }}">
                 <td>{{ post.title }}</td>
@@ -45,6 +48,7 @@
                        class="btn btn-xs btn-success"><span class="fa fa-pencil"></span></a>
                 </td>
 
+
                 <td><input type="checkbox" name="checkBox[]"  id="ic" value={{ post.id }}/></td>
 
             </tr>
@@ -52,4 +56,25 @@
         </tbody>
     </table>
 
+
+    {#<form action="http://foo.com" method="post">#}
+        {#<div>#}
+            {#<label for="say">What greeting do you want to say?</label>#}
+            {#<input name="say" id="say" value="Hi">#}
+        {#</div>#}
+        {#<div>#}
+            {#<label for="to">Who do you want to say it to?</label>#}
+            {#<input name="to" id="to" value="Mom">#}
+        {#</div>#}
+        {#<div>#}
+            {#<button>Send my greetings</button>#}
+        {#</div>#}
+    {#</form>#}
+
+    <a class="post" href="{{ path('mass_check_action',{'id': ['asd','dsa','postf']}) }}">Post it!</a><br/>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/post.js') }}"></script>
 {% endblock %}

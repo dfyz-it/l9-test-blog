@@ -144,29 +144,6 @@ class UserController extends Controller
         );
     }
 
-    public function SendConfirmCode(User $user)
-    {
-
-        //        $message = (new \Swift_Message('Hello Email'))
-        //          ->setFrom('send@example.com')
-        //          ->setTo('recipient@example.com')
-        //          ->setBody(
-        //            $this->renderView(
-        //              'emails/ConfirmMail.html.twig',
-        //              array(
-        //                'name' => 1,
-        //                'id' => 1,
-        //                'code' => 1,
-        //              )
-        //            ),
-        //            'text/html'
-        //          );
-        //
-        //        $mailer->send($message);
-
-        return;
-    }
-
 
     /**
      * @return \AppBundle\Service\ConfirmRegisterCodeService
