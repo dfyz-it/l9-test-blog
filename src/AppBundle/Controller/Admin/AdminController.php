@@ -26,7 +26,7 @@ class AdminController extends Controller
      * @Route("{filter}", name="admin_main_page")
      * @Method("GET")
      */
-    public function indexAction($filter = NULL)
+    public function indexAction($filter = null)
     {
 
         $em = $this->getDoctrine()->getManager();

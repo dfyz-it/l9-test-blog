@@ -87,9 +87,6 @@ class PostController extends Controller
             $post->setUser($user);
             $post->setChecked(false);
 
-            //            $user->setRoles(['ROLE_USER']);
-            //            $user->setConfirmed(false);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
@@ -162,8 +159,6 @@ class PostController extends Controller
      */
     public function massCheckAction(Request $request)
     {
-
-
         $id_list = explode(",", $request->get('id'));
 
         foreach ($id_list as $post_id) {
@@ -172,11 +167,10 @@ class PostController extends Controller
             $post = $em->getRepository('AppBundle:Post')
               ->findOneBy(['id' => $post_id]);
 
-            $post->setChecked(TRUE);
+            $post->setChecked(true);
             $em->persist($post);
             $em->flush();
         }
-
 
         $this->addFlash('success', 'Post updated!');
 

@@ -26,12 +26,11 @@ class PostRepository extends EntityRepository
           ->where('c.code = :id')
           ->setParameter('id', $category_code)
           ->andWhere('post.checked = :checked')
-          ->setParameter('checked', TRUE)
+          ->setParameter('checked', true)
           ->orderBy('post.id', 'DESC')
           ->getQuery()
           ->execute();
     }
-
 
     /**
      * @return \AppBundle\Entity\Post[]
@@ -50,16 +49,16 @@ class PostRepository extends EntityRepository
           ->execute();
     }
 
-
-    public function createQueryAdminFilter($filter = NULL)
+    public function createQueryAdminFilter($filter = null)
     {
 
-        if(is_null($filter)){
+        if (is_null($filter)) {
             return $this->createQueryBuilder('post')
               ->orderBy('post.id', 'DESC')
               ->getQuery()
               ->execute();
         }
+
         return $this->createQueryBuilder('post')
           ->where('post.checked = :checked')
           ->setParameter('checked', $filter)
@@ -67,5 +66,4 @@ class PostRepository extends EntityRepository
           ->getQuery()
           ->execute();
     }
-
 }

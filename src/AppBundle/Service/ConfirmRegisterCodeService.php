@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m.horiachev
- * Date: 24/07/18
- * Time: 16:03
- */
 
 namespace AppBundle\Service;
-
 
 use AppBundle\Entity\ConfirmRegisterCode;
 use AppBundle\Entity\User;

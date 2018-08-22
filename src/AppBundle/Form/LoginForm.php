@@ -9,12 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LoginForm extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
           ->add('_username')
           ->add('_password', PasswordType::class);
     }
-
 }
