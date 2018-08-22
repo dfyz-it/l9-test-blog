@@ -1,22 +1,24 @@
 +function ($) {
+$("input.post").click(function() {
+    var chkArray = [];
 
+    $(".chk:checked").each(function() {
+      chkArray.push($(this).val());
+    });
 
+  var dataString = "id="+ chkArray;
+    if(dataString.length > 0){
+      $.ajax({
+        type: "POST",
+        url: "/admin/masscheck",
+        dataType:'json',
+        data: dataString,
+        cache: false,
+      });
+      location.reload();
 
-  $("a.post").click(function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    var href = this.href;
-    var parts = href.split('?');
-    var url = parts[0];
-    var params = parts[1].split('&');
-    var pp, inputs = '';
-    for(var i = 0, n = params.length; i < n; i++) {
-      pp = params[i].split('=');
-      inputs += '<input type="hidden" name="' + pp[0] + '" value="' + pp[1] + '" />';
+    }else{
+      alert("Please at least check one of the checkbox");
     }
-    $("body").append('<form action="'+url+'" method="post" id="poster">'+inputs+'</form>');
-    $("#poster").submit();
   });
-
-
 }(jQuery);

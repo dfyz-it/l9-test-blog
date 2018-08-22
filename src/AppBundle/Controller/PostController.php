@@ -157,24 +157,29 @@ class PostController extends Controller
     /**
      * @Route("/admin/masscheck", name="mass_check_action")
      * @Security("is_granted('ROLE_ADMIN')")
+     * @Method("POST")
      *
      */
-    public function massCheckAction(Request $request){
+    public function massCheckAction(Request $request)
+    {
 
-//        $form->handleRequest($request);
-       $id_listls = $request->get('id');
-//        $isLoginSubmit = $request->getPathInfo() == '/admin' && $request->isMethod('POST');
-//        if (!$isLoginSubmit) {
-//            return;
-//        }
 
-//        $this->addFlash('success', $id);
+        $id_list = explode(",", $request->get('id'));
 
-        return $this->redirectToRoute(
-          'admin_main_page',
-          [
-            'id' => 123,
-          ]
-        );
+        foreach ($id_list as $post_id) {
+            $em = $this->getDoctrine()->getManager();
+
+            $post = $em->getRepository('AppBundle:Post')
+              ->findOneBy(['id' => $post_id]);
+
+            $post->setChecked(TRUE);
+            $em->persist($post);
+            $em->flush();
+        }
+
+
+        $this->addFlash('success', 'Post updated!');
+
+        return $this->render('admin/AdminMainPage.html.twig');
     }
 }
