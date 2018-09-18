@@ -9,6 +9,7 @@ use AppBundle\Entity\User_address;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
+// TODO: it is better to use separate fixture loaders for each entity
 class LoadFixtures extends Fixture
 {
 
@@ -29,6 +30,7 @@ class LoadFixtures extends Fixture
             $user->setDateOfBirth(new \DateTime('2011-01-01T15:03:01.012345Z'));
             $user->setEmail('user'.$i.'@gmail.com');
             $user->setPlainPassword('asdasdasd');
+            $user->setConfirmed(true);
             switch ($i) {
                 case 0:
                     $user->setRoles(['ROLE_ADMIN','ROLE_USER']);
@@ -56,7 +58,8 @@ class LoadFixtures extends Fixture
                 $post->setTitle('title '.rand(0, 50));
                 $post->setBody('body '.rand(0, 50));
                 $post->setUser($user);
-                $post->setCategory($categories[rand(0, 13)]);
+                $post->setCategory([$categories[rand(0, 13)]]);
+                $post->setChecked(true);
                 $manager->persist($post);
             }
         }

@@ -23,6 +23,7 @@
         <li class="search"><a href="#" class="js-header-search-toggle"><i class="fa fa-search"></i></a></li>
         {% if is_granted('ROLE_USER') %}
             {% if is_granted('ROLE_ADMIN') %}
+                {#TODO: manager should also have a link to Admin panel#}
                 <li><a href="/admin">Admin</a></li>
             {% endif %}
             <li><a href="/{{ app.user.id }}/myposts"> My Post</a></li>

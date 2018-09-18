@@ -6,6 +6,7 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
+ * TODO: create initial migration: full db structure should be described in migrations
  * Auto-generated Migration: Please modify to your needs!
  */
 class Version20180720080937 extends AbstractMigration

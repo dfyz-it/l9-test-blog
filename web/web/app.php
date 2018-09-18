@@ -1,5 +1,6 @@
 <?php
 
+// TODO web/web folder should not exist
 use Symfony\Component\HttpFoundation\Request;
 
 /**

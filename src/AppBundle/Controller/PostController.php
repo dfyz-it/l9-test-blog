@@ -35,6 +35,7 @@ class PostController extends Controller
         $posts = $em->getRepository('AppBundle:Post')
           ->findAllPostByCategoryChecked($category_code);
 
+        // TODO paginator should work with query builder, but not with array of posts, this wont work when there would be a lot of posts in db
         $posts = $this->get('knp_paginator')
           ->paginate($posts, $request->query->get('page', 1), 2);
 
@@ -47,6 +48,7 @@ class PostController extends Controller
     }
 
     /**
+     * TODO: {user_id} parameter is not required here as user could be gotten from security context
      * @Route("/{user_id}/myposts", name="user_show_posts")
      * @Method("GET")
      */
@@ -73,6 +75,7 @@ class PostController extends Controller
     }
 
     /**
+     * TODO: need to add "Create post" link in some template
      * @Route("/{user}/myposts/add", name="user_add_post")
      */
     public function addUserPostAction(Request $request, User $user)
@@ -80,6 +83,7 @@ class PostController extends Controller
         $form = $this->createForm(PostForm::class);
         $form->handleRequest($request);
 
+        // TODO: it is better to check $form->isSubmitted() as well
         if ($form->isValid()) {
 
             /** @var \AppBundle\Entity\Post $post */
@@ -152,6 +156,7 @@ class PostController extends Controller
     }
 
     /**
+     * TODO: better to move this action to different controller from Admin namespace
      * @Route("/admin/masscheck", name="mass_check_action")
      * @Security("is_granted('ROLE_ADMIN')")
      * @Method("POST")
@@ -165,6 +170,7 @@ class PostController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $post = $em->getRepository('AppBundle:Post')
+                // TODO this is mass action, so all posts should be selected with one request
               ->findOneBy(['id' => $post_id]);
 
             $post->setChecked(true);

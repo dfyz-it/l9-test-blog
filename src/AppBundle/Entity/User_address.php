@@ -12,6 +12,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * TODO: invalid PSR4 class name
  * @ORM\Entity
  * @ORM\Table(name="user_address")
  */

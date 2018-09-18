@@ -39,6 +39,7 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            // TODO: all logic from this if condition should be stored in a service
 
             /** @var \AppBundle\Entity\User $user */
             $user = $form->getData();
@@ -78,6 +79,7 @@ class UserController extends Controller
               'Confirm you email from mail '.$user->getEmail()
             );
 
+            // TODO: redirect to login form amnually to avoid double redirects
             return $this->redirectToRoute('homepage');
 
         }
@@ -91,6 +93,7 @@ class UserController extends Controller
     }
 
     /**
+     * TODO use PSR-4 naming conventions
      * @Route("/emailconfirm/{id}", name="email_confirm")
      */
     public function EmailconfirmAction(Request $request, User $user)
@@ -101,6 +104,7 @@ class UserController extends Controller
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+            // TODO use camelCase variable names
             $confirm_code_from_db = $em->getRepository(
               'AppBundle:ConfirmRegisterCode'
             )

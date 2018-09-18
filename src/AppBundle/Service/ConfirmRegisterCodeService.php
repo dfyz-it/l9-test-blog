@@ -33,6 +33,7 @@ class ConfirmRegisterCodeService
     public function createConfirmCode(User $user)
     {
         $user_code = new ConfirmRegisterCode();
+        // TODO: too weak code, need to use random string generator
         $user_code->setConfirmCode(rand(100, 999));
         $user_code->setUser($user);
         $user_code->setExpirationDate(new \DateTime('+1 day'));

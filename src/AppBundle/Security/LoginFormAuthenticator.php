@@ -3,6 +3,7 @@
 namespace AppBundle\Security;
 
 
+use AppBundle\Entity\User;
 use AppBundle\Form\LoginForm;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -72,12 +73,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
+        /** @var User $user */
         $password = $credentials['_password'];
 
         if ($this->passwordEncoder->isPasswordValid(
             $user,
             $password
-          ) && $user->getConfirmed() == 1 && $user->getBlocked() != 1) {
+                // TODO confirmed and blocked fields are boolean
+          ) && $user->getConfirmed() && !$user->getBlocked()) {
             return true;
         }
 

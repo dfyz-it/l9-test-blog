@@ -12,9 +12,11 @@ namespace AppBundle\Doctrine;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\User;
+// TODO: unused imports should be removed
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+// TODO: PHPDoc should be used for all classes, properties and methods (at least public)
 class HashPasswordListener implements EventSubscriber
 {
 
@@ -37,6 +39,7 @@ class HashPasswordListener implements EventSubscriber
     }
 
 
+    // TODO: there is no possibility to update password, so preUpdate listener could be removed
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();

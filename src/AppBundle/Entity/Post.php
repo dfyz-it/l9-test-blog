@@ -55,6 +55,7 @@ class Post
 
 
     /**
+     * TODO: not nullable fields should have default value
      * @ORM\Column(type="boolean")
      */
     private $checked;
@@ -73,6 +74,7 @@ class Post
 
 
     /**
+     * TODO use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity trait instead of defining this property
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;

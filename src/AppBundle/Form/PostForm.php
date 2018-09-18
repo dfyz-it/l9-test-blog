@@ -30,6 +30,8 @@ class PostForm extends AbstractType
               },
             ]
           )
+            // TODO User should not be able to check/un-check his own posts, only admin and moderator are able to do it
+            // TODO it is not enough to hide field in template since user could send data via Postman, so access should be checked in the form itself
           ->add('checked')
           ->add('body');
     }
@@ -38,6 +40,7 @@ class PostForm extends AbstractType
     {
         $resolver->setDefaults(
           [
+              //TODO: use Post::class constant instead of class name string
             'data_class' => 'AppBundle\Entity\Post',
           ]
         );

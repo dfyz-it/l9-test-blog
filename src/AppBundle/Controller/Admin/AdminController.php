@@ -23,6 +23,7 @@ class AdminController extends Controller
 {
 
     /**
+     * TODO: for filtering it is better to use get parameters instead of uri
      * @Route("{filter}", name="admin_main_page")
      * @Method("GET")
      */

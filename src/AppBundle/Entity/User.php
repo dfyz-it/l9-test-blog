@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * TODO: add unique constraint to user table
  * @UniqueEntity(fields={"email"}, message="Already exist")
  */
 class User implements UserInterface
@@ -65,6 +66,7 @@ class User implements UserInterface
     private $password;
 
     /**
+     * TODO: there is no need to use $plainPassword field, you could use "password" field in the form with RepeatedType
      * @Assert\NotBlank(groups={"Registration"})
      * @Assert\Length(
      *      min = 6,
@@ -80,11 +82,13 @@ class User implements UserInterface
 
 
     /**
+     * TODO: not nullable fields should have default value
      * @ORM\Column(type="boolean")
      */
     private $confirmed;
 
     /**
+     * TODO: not nullable fields should have default value
      * @ORM\Column(type="boolean")
      */
     private $blocked;

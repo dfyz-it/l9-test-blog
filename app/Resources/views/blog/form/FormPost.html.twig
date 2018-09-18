@@ -14,6 +14,7 @@
                     {{ form_row(form.checked) }}
                 {% endif %}
                 <button type="submit" class="btn btn-primary" formnovalidate>Save</button>
+                {# TODO: form_end tag renders "checked" field because it was not secured in the form #}
                 {{ form_end(form) }}
 
             </div>

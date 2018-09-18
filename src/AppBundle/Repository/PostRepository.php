@@ -19,6 +19,7 @@ class PostRepository extends EntityRepository
     public function findAllPostByCategoryChecked($category_code)
     {
 
+        //TODO: no need to join and select user if no user data is displayed in the list of posts
         return $this->createQueryBuilder('post')
           ->leftJoin('post.user', 'u')
           ->addSelect('u')

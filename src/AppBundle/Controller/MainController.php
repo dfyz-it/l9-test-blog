@@ -18,13 +18,14 @@ class MainController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $categorys = $em->getRepository('AppBundle:Category')
+        $categories = $em->getRepository('AppBundle:Category')
         ->findAllCategoryswithPosts();
 
         return $this->render(
           'main/homepage.html.twig',
           [
-            'categorys' => $categorys,
+            'categorys' => $categories,
+            // TODO: posts count should be computed using repository method
             'recentPostsCount' => 1,
           ]
         );
